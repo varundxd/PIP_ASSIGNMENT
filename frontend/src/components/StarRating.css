@@ -1,0 +1,20 @@
+.starability-result {
+    font-size: 0;
+    width:120px;
+  }
+  
+  .star {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: 0 2px 0 0;
+    background-color: #ddd;
+    border-radius: 50%;
+    cursor: pointer;
+  }
+  
+  .filled {
+    background-color: #f8c600;
+  }
+  
+
