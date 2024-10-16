@@ -3,8 +3,7 @@ import Header from "./Header";
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import API_URL from "../constants";
-import ReCAPTCHA from 'react-google-recaptcha';
-const SITE_KEY = '6LdmS3IpAAAAAChfBAkAqY4y72BcTtI8plu1XUNY';
+
 
 
 function Register() {
@@ -12,8 +11,6 @@ function Register() {
   const [password, setpassword] = useState("");
   const [email, setemail] = useState("");
   const [mobile, setmobile] = useState("");
-  const [recaptchaValue, setRecaptchaValue] = useState('');
-  const [isCaptchaVerified, setIsCaptchaVerified] = useState(false);
   const [usernameValidation, setUsernameValidation] = useState("");
   const [passwordValidation, setPasswordValidation] = useState("");
   const [emailValidation, setEmailValidation] = useState("");
@@ -58,15 +55,10 @@ function Register() {
   }, [password]);
   
   const validateEmail = (email) => {
-    // You can add your email validation logic here
-    // For a simple example, let's just check if it contains '@'
     return email.includes("@");
   };
 
   const validateMobile = (mobile) => {
-    // You can add your mobile validation logic here
-    // For a simple example, let's just check if it contains only numbers
-    // return /^\d+$/.test(mobile);
     return /^\+?\d+$/.test(mobile);
   };
 
@@ -79,9 +71,9 @@ function Register() {
       emailValidation === "is-valid" &&
       mobileValidation === "is-valid"
     ) {
-      console.log({ username, password, recaptchaValue });
-      const url = API_URL + "/signup";
-      const data = { username, password, mobile, email, recaptchaValue };
+      console.log({ username, password});
+      const url = API_URL + "/register";
+      const data = { username, password, mobile, email};
       axios
         .post(url, data)
         .then((res) => {
@@ -125,10 +117,6 @@ function Register() {
       });
   };
   
-  const onChange = value => {
-    setRecaptchaValue(value);
-    setIsCaptchaVerified(true); // Set to true after recaptcha is verified
-  };
   return (
     <div className="signup-container">
       <Header />
@@ -201,13 +189,8 @@ function Register() {
         {passwordValidation === "is-invalid" && (
           <div className="in invalid-feedback">Password is required.</div>
         )}
-        <div className="catcha form-group mt-2">
-          <ReCAPTCHA
-            sitekey={SITE_KEY}
-            onChange={onChange}
-          />
-        </div>
-        <button onClick={handleApi} disabled={!isCaptchaVerified} className="button-79">
+  
+        <button onClick={handleApi} className="button-79">
           REGISTER
         </button>
   <span>
